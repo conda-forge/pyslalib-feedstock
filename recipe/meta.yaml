@@ -1,5 +1,5 @@
 {% set name = "pyslalib" %}
-{% set version = "1.0.4" %}
+{% set version = "1.0.7" %}
 
 
 package:
@@ -8,11 +8,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pySLALIB-{{ version }}.tar.gz
-  sha256: 21d0e1ae6fc73ade9c90ec9e956b2da33163383388cc84e5ec58994bf66c8b35
+  sha256: b38e71a3011a985ccc1533e4b12bb4fe9b03566adfcc8e4071ed11c5d0660131
 
 build:
   skip: true  # [win]
-  number: 6
+  number: 0
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
