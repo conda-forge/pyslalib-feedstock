@@ -12,12 +12,13 @@ source:
 
 build:
   skip: true  # [win]
-  number: 6
+  number: 7
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('fortran') }}
   host:
     - numpy
@@ -25,7 +26,6 @@ requirements:
     - python
   run:
     - python
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
