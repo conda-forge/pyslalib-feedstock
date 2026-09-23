@@ -1,5 +1,5 @@
 {% set name = "pyslalib" %}
-{% set version = "1.0.4" %}
+{% set version = "1.0.10" %}
 
 
 package:
@@ -7,31 +7,37 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pySLALIB-{{ version }}.tar.gz
-  sha256: 21d0e1ae6fc73ade9c90ec9e956b2da33163383388cc84e5ec58994bf66c8b35
+  url: https://files.pythonhosted.org/packages/source/{{ name[0] }}/{{ name }}/pyslalib-{{ version }}.tar.gz
+  sha256: da8663bdf9db51e345214a0add057ca7f52f7a892302044e8449b730dac1b085
 
 build:
   skip: true  # [win]
-  number: 6
-  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('fortran') }}
+    - meson
+    - ninja
+    - pkg-config
   host:
     - numpy
+    - meson-python >=0.17.1
     - pip
     - python
   run:
     - python
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
     - pyslalib
+    - pyslalib.slalib
   commands:
     - pip check
+    - python -c "from pyslalib import slalib; assert abs(slalib.sla_airmas(0.5) - 1.1394) < 1e-3"
   requires:
     - pip
 
